@@ -61,6 +61,24 @@ server.post('/courses', (request, reply) => {
 	return reply.status(201).send({ courseId })
 })
 
+server.delete('/courses/:id', (request, reply) => {
+	type Params = {
+		id: string
+	}
+
+	const params = request.params as Params
+	const courseId = params.id
+
+	const courseIndex = courses.findIndex((course) => course.id === courseId)
+
+	if (courseIndex !== -1) {
+		courses.splice(courseIndex, 1)
+		return reply.status(204).send()
+	}
+
+	return reply.status(404).send({ message: 'Course not found' })
+})
+
 server.listen({ port: 3333 }).then(() => {
 	console.log('HTTP Server running')
 })
