@@ -1,6 +1,19 @@
 import fastify from 'fastify'
-import crypto from 'node:crypto'
+import { fastifySwagger } from '@fastify/swagger'
+import {
+	validatorCompiler,
+	serializerCompiler,
+	type ZodTypeProvider,
+	jsonSchemaTransform,
+} from 'fastify-type-provider-zod'
+import scalarAPIReference from '@scalar/fastify-api-reference'
+import { createCourseRoute } from './src/routes/create-course.ts'
+import { getCourseByIdRoute } from './src/routes/get-course-by-id.ts'
+import { getCoursesRoute } from './src/routes/get-courses.ts'
 
+/**
+ * Server
+ */
 const server = fastify({
 	logger: {
 		// Dá um log no terminal
@@ -12,72 +25,58 @@ const server = fastify({
 			},
 		},
 	},
-})
+}).withTypeProvider<ZodTypeProvider>()
 
-const courses = [
-	{ id: '1', title: 'Curso de Node.js' },
-	{ id: '2', title: 'Curso de React' },
-	{ id: '3', title: 'Curso de Angular' },
-]
+server.setSerializerCompiler(serializerCompiler)
+server.setValidatorCompiler(validatorCompiler)
 
-// Routes
-server.get('/courses', () => {
-	return { courses }
-})
+/**
+ * Docs
+ */
+if (process.env.NODE_ENV === 'development') {
+	server.register(fastifySwagger, {
+		openapi: {
+			info: {
+				title: 'Desafio Node.js',
+				version: '1.0.0',
+			},
+		},
+		// Integrar o Swagger com o typeProvideZod
+		transform: jsonSchemaTransform,
+	})
 
-server.get('/courses/:id', (request, reply) => {
-	type Params = {
-		id: string
-	}
+	server.register(scalarAPIReference, {
+		routePrefix: '/docs',
+		configuration: {
+			theme: 'deepSpace',
+		},
+	})
+}
 
-	const params = request.params as Params
-	const courseId = params.id
+/**
+ * Routes
+ */
+server.register(createCourseRoute)
+server.register(getCourseByIdRoute)
+server.register(getCoursesRoute)
 
-	const course = courses.find((course) => course.id === courseId)
+// server.delete('/courses/:id', (request, reply) => {
+// 	type Params = {
+// 		id: string
+// 	}
 
-	if (course) {
-		return { course }
-	}
+// 	const params = request.params as Params
+// 	const courseId = params.id
 
-	return reply.status(404)
-})
+// 	const courseIndex = courses.findIndex((course) => course.id === courseId)
 
-server.post('/courses', (request, reply) => {
-	type Body = {
-		title: string
-	}
+// 	if (courseIndex !== -1) {
+// 		courses.splice(courseIndex, 1)
+// 		return reply.status(204).send()
+// 	}
 
-	const courseId = crypto.randomUUID()
-	const body = request.body as Body
-	const courseTitle = body.title
-
-	if (!courseTitle) {
-		return reply.status(400).send({ message: 'Título obrigatório!' })
-	}
-
-	courses.push({ id: courseId, title: courseTitle })
-
-	// SEMPRE retornar um objeto nas rotas
-	return reply.status(201).send({ courseId })
-})
-
-server.delete('/courses/:id', (request, reply) => {
-	type Params = {
-		id: string
-	}
-
-	const params = request.params as Params
-	const courseId = params.id
-
-	const courseIndex = courses.findIndex((course) => course.id === courseId)
-
-	if (courseIndex !== -1) {
-		courses.splice(courseIndex, 1)
-		return reply.status(204).send()
-	}
-
-	return reply.status(404).send({ message: 'Course not found' })
-})
+// 	return reply.status(404).send({ message: 'Course not found' })
+// })
 
 server.listen({ port: 3333 }).then(() => {
 	console.log('HTTP Server running')
