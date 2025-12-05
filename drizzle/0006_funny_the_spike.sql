@@ -1,0 +1,2 @@
+-- Custom SQL migration file, put your code below! --
+-- Preencher as passwords dos users que já existem com base num valor anterior --

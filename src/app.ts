@@ -10,6 +10,7 @@ import scalarAPIReference from '@scalar/fastify-api-reference'
 import { createCourseRoute } from './routes/create-course.ts'
 import { getCourseByIdRoute } from './routes/get-course-by-id.ts'
 import { getCoursesRoute } from './routes/get-courses.ts'
+import { loginRoute } from './routes/login.ts'
 
 /**
  * Server
@@ -59,5 +60,6 @@ if (process.env.NODE_ENV === 'development') {
 server.register(createCourseRoute)
 server.register(getCourseByIdRoute)
 server.register(getCoursesRoute)
+server.register(loginRoute)
 
 export { server }

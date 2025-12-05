@@ -1,8 +1,9 @@
 POST http:localhost:3333/courses
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNzQ5NTQ1YS0wYmMwLTRjNTQtYmM2OS05MDY1YTMyZDZkNGIiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc2NDk1NDQ2Mn0.oK6mJ_ic4vZ2BN-R2GJiUxZRiyfHInOKXwLEx-BqaEA
 
 {
-  "title": "Curso de Bun"
+  "title": "Curso de Vue"
 }
 
 ###
@@ -23,8 +24,15 @@ GET http:localhost:3333/courses?orderBy=title&page=2
 
 ###
 
-GET http:localhost:3333/courses/ced9d9be-8c02-46bd-a0e5-ef893b163344
+GET http:localhost:3333/courses/a6ebe4b6-b1b5-4a2c-a8dd-f8aff5cf3802
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNzQ5NTQ1YS0wYmMwLTRjNTQtYmM2OS05MDY1YTMyZDZkNGIiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc2NDk1MzY3M30.vAaZa_jalWvPGVpQhSBLH3hIQdpAZNaoZPsgPF4aHhA
 
 ###
 
-DELETE http:localhost:3333/courses/f9e51080-bb34-4767-a96a-5912795e62fe
+POST http:localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "Romeu50@live.com",
+  "password": "123456"
+}
