@@ -7,9 +7,9 @@ import {
 	jsonSchemaTransform,
 } from 'fastify-type-provider-zod'
 import scalarAPIReference from '@scalar/fastify-api-reference'
-import { createCourseRoute } from './src/routes/create-course.ts'
-import { getCourseByIdRoute } from './src/routes/get-course-by-id.ts'
-import { getCoursesRoute } from './src/routes/get-courses.ts'
+import { createCourseRoute } from './routes/create-course.ts'
+import { getCourseByIdRoute } from './routes/get-course-by-id.ts'
+import { getCoursesRoute } from './routes/get-courses.ts'
 
 /**
  * Server
@@ -60,24 +60,4 @@ server.register(createCourseRoute)
 server.register(getCourseByIdRoute)
 server.register(getCoursesRoute)
 
-// server.delete('/courses/:id', (request, reply) => {
-// 	type Params = {
-// 		id: string
-// 	}
-
-// 	const params = request.params as Params
-// 	const courseId = params.id
-
-// 	const courseIndex = courses.findIndex((course) => course.id === courseId)
-
-// 	if (courseIndex !== -1) {
-// 		courses.splice(courseIndex, 1)
-// 		return reply.status(204).send()
-// 	}
-
-// 	return reply.status(404).send({ message: 'Course not found' })
-// })
-
-server.listen({ port: 3333 }).then(() => {
-	console.log('HTTP Server running')
-})
+export { server }

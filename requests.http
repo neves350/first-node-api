@@ -11,6 +11,18 @@ GET http:localhost:3333/courses
 
 ###
 
+GET http:localhost:3333/courses?search=an
+
+###
+
+GET http:localhost:3333/courses?orderBy=title
+
+###
+
+GET http:localhost:3333/courses?orderBy=title&page=2
+
+###
+
 GET http:localhost:3333/courses/ced9d9be-8c02-46bd-a0e5-ef893b163344
 
 ###

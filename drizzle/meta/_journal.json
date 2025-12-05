@@ -15,6 +15,27 @@
       "when": 1764850951169,
       "tag": "0001_lumpy_martin_li",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764932859925,
+      "tag": "0002_perfect_randall_flagg",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1764943432373,
+      "tag": "0003_careful_lake",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1764943686548,
+      "tag": "0004_lumpy_the_initiative",
+      "breakpoints": true
     }
   ]
 }
